@@ -1,0 +1,122 @@
+@startuml
+' Set a more modern theme
+!theme mars
+
+' Define classes, interfaces, and enums
+
+abstract class Vehicle {
+    -registrationNumber: String
+    -type: VehicleType
+    +Vehicle(registrationNumber: String, type: VehicleType)
+    +getRegistrationNumber(): String
+    +getType(): VehicleType
+    +calculateFee(durationInHours: long): double {abstract}
+}
+
+interface Parkable {
+    +getParkingInfo(): String {static}
+    +printRegistration(): void {default}
+    -printVin(): void {private}
+    +getRegistrationNumber(): String
+    -generateVin(): String {private}
+}
+
+class Car {
+    +Car(registrationNumber: String)
+    +calculateFee(durationInHours: long): double
+}
+
+class Motorbike {
+    +Motorbike(registrationNumber: String)
+    +calculateFee(durationInHours: long): double
+}
+
+class ParkingSlot {
+    -slotNumber: int
+    -vehicle: Vehicle
+    -status: ParkingStatus
+    -entryTime: LocalDateTime
+    +ParkingSlot(slotNumber: int)
+    +getSlotNumber(): int
+    +getVehicle(): Vehicle
+    +getStatus(): ParkingStatus
+    +getEntryTime(): LocalDateTime
+    +park(vehicle: Vehicle): void
+    +unpark(): void
+    +isAvailable(): boolean
+}
+
+record Ticket {
+    +registrationNumber: String
+    +slotNumber: int
+    +entryTime: LocalDateTime
+    +exitTime: LocalDateTime
+    +fee: double
+}
+
+class Money {
+    -amount: BigDecimal
+    +Money(amount: String)
+    +Money(amount: double)
+    +add(other: Money): Money
+    +toString(): String
+}
+
+class ParkingService {
+    -slots: ParkingSlot[]
+    -ticketHistory: List<Ticket>
+    +ParkingService(capacity: int)
+    +park(vehicle: Vehicle): int
+    +unpark(slotNumber: int): Ticket
+    +displayParkingStatus(): void
+    +findVehicles(predicate: Predicate<Vehicle>): List<Vehicle>
+    +park(registrationNumber: String, type: VehicleType): int
+    +printSlotDetails(slotNumbers: int...): void
+}
+
+class Main {
+    -parkVehicle(scanner: Scanner, parkingService: ParkingService): void
+    -unparkVehicle(scanner: Scanner, parkingService: ParkingService): void
+    -findVehicles(scanner: Scanner, parkingService: ParkingService): void
+    -viewSpecificSlots(scanner: Scanner, parkingService: ParkingService): void
+}
+
+enum VehicleType {
+    CAR
+    MOTORBIKE
+}
+
+enum ParkingStatus {
+    OCCUPIED
+    AVAILABLE
+}
+
+exception ParkingFullException {
+    +ParkingFullException(message: String)
+}
+
+' Define relationships
+
+Vehicle <|-- Car
+Vehicle <|-- Motorbike
+Vehicle ..|> Parkable : implements
+Vehicle <|--o Car : permits
+Vehicle <|--o Motorbike : permits
+
+ParkingSlot "1" *-- "0..1" Vehicle : contains
+ParkingSlot "1" *-- "1" ParkingStatus : has
+
+ParkingService "1" *-- "1..*" ParkingSlot : manages
+ParkingService "1" *-- "0..*" Ticket : records
+ParkingService ..> ParkingFullException : throws
+
+Main ..> ParkingService : uses
+Main ..> Car : creates
+Main ..> Motorbike : creates
+Main ..> Ticket : receives
+
+Ticket ..> VehicleType : relates to
+Car ..> VehicleType : uses
+Motorbike ..> VehicleType : uses
+
+@enduml
