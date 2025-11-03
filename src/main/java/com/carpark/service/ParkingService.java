@@ -31,6 +31,12 @@ public class ParkingService {
         throw new ParkingFullException("Car park is full.");
     }
 
+    /**
+     * Unparks a vehicle from a slot and returns a ticket.
+     * This method demonstrates call-by-value for primitive types (slotNumber)
+     * and object references (the returned Ticket).
+     * The returned Ticket is a record, which is immutable, so no defensive copy is needed.
+     */
     public Ticket unpark(int slotNumber) {
         if (slotNumber < 1 || slotNumber > slots.length) {
             throw new IllegalArgumentException("Invalid slot number.");
@@ -53,14 +59,25 @@ public class ParkingService {
         return ticket;
     }
 
+    /**
+     * Displays the status of all parking slots.
+     * This method uses a StringBuilder to efficiently build the status string.
+     */
     public void displayParkingStatus() {
-        System.out.println("Parking Status:");
+        StringBuilder sb = new StringBuilder();
+        sb.append("Parking Status:\n");
         for (ParkingSlot slot : slots) {
             String status = slot.isAvailable() ? "Available" : "Occupied by " + slot.getVehicle().getRegistrationNumber();
-            System.out.println("Slot " + slot.getSlotNumber() + ": " + status);
+            sb.append("Slot ").append(slot.getSlotNumber()).append(": ").append(status).append("\n");
         }
+        System.out.println(sb.toString());
     }
 
+    /**
+     * Finds vehicles based on a predicate.
+     * The predicate is a lambda expression, which is a closure.
+     * It can access variables from its enclosing scope (effectively final variables).
+     */
     public List<Vehicle> findVehicles(Predicate<Vehicle> predicate) {
         List<Vehicle> foundVehicles = new ArrayList<>();
         for (ParkingSlot slot : slots) {
@@ -81,5 +98,21 @@ public class ParkingService {
             case MOTORBIKE -> new Motorbike(registrationNumber);
         };
         return park(vehicle);
+    }
+
+    /**
+     * Prints the details of multiple slots using varargs.
+     */
+    public void printSlotDetails(int... slotNumbers) {
+        System.out.println("Details for selected slots:");
+        for (int slotNumber : slotNumbers) {
+            if (slotNumber >= 1 && slotNumber <= slots.length) {
+                ParkingSlot slot = slots[slotNumber - 1];
+                String status = slot.isAvailable() ? "Available" : "Occupied by " + slot.getVehicle().getRegistrationNumber();
+                System.out.println("Slot " + slot.getSlotNumber() + ": " + status);
+            } else {
+                System.out.println("Slot " + slotNumber + ": Invalid slot number.");
+            }
+        }
     }
 }

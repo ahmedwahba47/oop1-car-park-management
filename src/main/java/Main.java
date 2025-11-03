@@ -18,7 +18,8 @@ void main() {
             System.out.println("2. Unpark a vehicle");
             System.out.println("3. Display parking status");
             System.out.println("4. Find vehicles by type");
-            System.out.println("5. Exit");
+            System.out.println("5. View details of specific slots (Varargs example)");
+            System.out.println("6. Exit");
             System.out.print("Choose an option: ");
 
             int choice = scanner.nextInt();
@@ -29,7 +30,8 @@ void main() {
                 case 2 -> unparkVehicle(scanner, parkingService);
                 case 3 -> parkingService.displayParkingStatus();
                 case 4 -> findVehicles(scanner, parkingService);
-                case 5 -> {
+                case 5 -> viewSpecificSlots(scanner, parkingService);
+                case 6 -> {
                     System.out.println("Exiting...");
                     return;
                 }
@@ -85,9 +87,11 @@ private void findVehicles(Scanner scanner, ParkingService parkingService) {
 
     List<Vehicle> foundVehicles;
     if ("CAR".equalsIgnoreCase(type)) {
-        foundVehicles = parkingService.findVehicles(v -> v instanceof Car);
+        // Pattern matching for instanceof (Java 16+)
+        foundVehicles = parkingService.findVehicles(v -> v instanceof Car car && car.getType() == com.carpark.model.VehicleType.CAR);
     } else if ("MOTORBIKE".equalsIgnoreCase(type)) {
-        foundVehicles = parkingService.findVehicles(v -> v instanceof Motorbike);
+        // Pattern matching for instanceof (Java 16+)
+        foundVehicles = parkingService.findVehicles(v -> v instanceof Motorbike motorbike && motorbike.getType() == com.carpark.model.VehicleType.MOTORBIKE);
     } else {
         System.out.println("Invalid vehicle type.");
         return;
@@ -99,4 +103,20 @@ private void findVehicles(Scanner scanner, ParkingService parkingService) {
         System.out.println("Found vehicles of type " + type + ":");
         foundVehicles.forEach(v -> System.out.println(v.getRegistrationNumber()));
     }
+}
+
+private void viewSpecificSlots(Scanner scanner, ParkingService parkingService) {
+    System.out.print("Enter slot numbers to view (space-separated): ");
+    String line = scanner.nextLine();
+    String[] slotStrings = line.split(" ");
+    int[] slotNumbers = new int[slotStrings.length];
+    for (int i = 0; i < slotStrings.length; i++) {
+        try {
+            slotNumbers[i] = Integer.parseInt(slotStrings[i]);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid slot number entered: " + slotStrings[i]);
+            return;
+        }
+    }
+    parkingService.printSlotDetails(slotNumbers);
 }

@@ -22,7 +22,7 @@
 
 **(3:30-5:30) Demo: Parking a Vehicle**
 
-"Let's park a car. I'll choose option 1, enter 'CAR' as the vehicle type, and provide a registration number."
+"Let's park a car. I'll choose option 1, enter 'CAR' as the vehicle type, and provide a registration number. Notice that the input validation is now improved, so it won't ask for a registration number if the vehicle type is invalid."
 
 "The system confirms that the car has been parked and assigns it a slot number."
 
@@ -32,27 +32,33 @@
 
 **(5:30-7:00) Demo: Displaying Parking Status**
 
-"Option 3 allows us to see the current status of the car park. It shows which slots are occupied and by which vehicles."
+"Option 3 allows us to see the current status of the car park. It shows which slots are occupied and by which vehicles. This feature uses a `StringBuilder` internally for efficient string manipulation."
 
 **(7:00-8:30) Demo: Unparking a Vehicle**
 
 "Now, let's unpark the car we parked earlier. I'll choose option 2 and enter the slot number."
 
-"The system calculates the parking fee and displays the ticket details. The fee is calculated based on the duration of the stay and the vehicle type."
+"The system calculates the parking fee and displays the ticket details. The fee is calculated based on the duration of the stay and the vehicle type. The `Ticket` is a Java `record`, demonstrating immutability."
 
-**(8:30-9:30) Code Highlights**
+**(8:30-9:00) Demo: View details of specific slots (Varargs example)**
+
+"Option 5 demonstrates the use of varargs. I can enter multiple slot numbers, and the system will display their details."
+
+**(9:00-10:00) Code Highlights**
 
 "I'd like to highlight a few code features."
 
-"The `Vehicle` class is a `sealed` class, which restricts its subclasses to `Car` and `Motorbike`."
-
-"The `Ticket` class is a `record`, which is a concise way to create immutable data-only classes."
+"The `Vehicle` class is a `sealed` class, which restricts its subclasses to `Car` and `Motorbike`. It also implements the `Parkable` interface, which demonstrates `static`, `default`, and `private` methods within an interface."
 
 "The `Main` class uses an instance `main` method, a new feature in Java 25. This simplifies the entry point of the application."
 
 "The `Car` and `Motorbike` constructors use flexible constructor bodies, another Java 25 feature, to validate the registration number before calling the super constructor."
 
-**(9:30-10:00) Conclusion**
+"In the `findVehicles` method, I've used pattern matching for `instanceof` to concisely check the type of a vehicle and cast it simultaneously."
+
+"I've also added comments throughout the code to explain concepts like `this()` vs `this.`, `super()` vs `super.`, call-by-value, defensive copying, and `final`/`effectively final`."
+
+**(10:00-10:30) Conclusion**
 
 "This project has been a great opportunity to apply the concepts learned in the OOP1 module and to explore the new features in Java 25."
 

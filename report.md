@@ -14,6 +14,7 @@ The application implements the following user stories, which correspond to the f
 *   **Unpark a vehicle**: Users can unpark a vehicle by providing the slot number. The system calculates the parking fee based on the duration of the stay and the vehicle type.
 *   **Parking status**: Users can view the current status of all parking slots, including which slots are occupied and by which vehicles.
 *   **Find vehicles**: Users can find parked vehicles by their type.
+*   **View details of specific slots**: Users can view details of multiple parking slots by providing their numbers, demonstrating the use of varargs.
 *   **Handle full car park**: If a user tries to park a vehicle when the car park is full, the system gracefully handles the situation by displaying a "Parking Full" message.
 *   **Handle invalid input**: The application validates user input and provides appropriate error messages for invalid slot numbers or vehicle types.
 
@@ -23,8 +24,28 @@ The application implements the following user stories, which correspond to the f
 
 The project successfully implements all the fundamental and advanced Java features specified in the assignment brief. This includes:
 
-*   **Fundamentals**: Classes, objects, encapsulation, inheritance, polymorphism, exceptions, enums, arrays, and the Java Core API (String, StringBuilder, List/ArrayList, Date API).
-*   **Advanced**: Call-by-value, defensive copying, records, sealed classes, lambdas, method references, switch expressions, and pattern matching.
+*   **Classes**: The system is built around several classes such as `Vehicle`, `Car`, `Motorbike`, `ParkingSlot`, `Ticket`, `ParkingService`, and `Money`.
+*   **`this()` and `this.`**: Demonstrated in constructors (e.g., `Vehicle` class) to distinguish instance variables from parameters.
+*   **Method Overloading**: The `ParkingService` class includes overloaded `park` methods, allowing vehicles to be parked using different parameters.
+*   **Varargs**: The `ParkingService.printSlotDetails` method demonstrates the use of variable-arity arguments, allowing users to view details of multiple slots.
+*   **LVTI (Local-Variable Type Inference - `var`)**: Used where appropriate for concise code.
+*   **Encapsulation**: Achieved through private fields and public getter methods across all model classes.
+*   **Interfaces**: The `Parkable` interface is introduced, which the `Vehicle` class implements. This interface demonstrates `static`, `default`, and `private` methods within an interface.
+*   **Inheritance**: `Car` and `Motorbike` classes extend the `Vehicle` abstract class, showcasing hierarchical relationships.
+*   **Overriding and Polymorphism**: The `calculateFee` method is overridden in `Car` and `Motorbike` subclasses, demonstrating polymorphic behavior.
+*   **`super()` and `super.`**: `super()` is explicitly used in subclass constructors (`Car`, `Motorbike`) to invoke the parent class constructor.
+*   **Exceptions**: Both checked (`ParkingFullException`) and unchecked (`IllegalArgumentException`) exceptions are used for robust error handling.
+*   **Enums**: `VehicleType` and `ParkingStatus` enums are used for type-safe representation of fixed sets of constants.
+*   **Arrays**: Parking slots are managed using an array in the `ParkingService`.
+*   **Java Core API**: Extensive use of `String`, `StringBuilder` (for efficient string manipulation in `displayParkingStatus`), `List`/`ArrayList` (for `ticketHistory` and `foundVehicles`), and `java.time` package (for `LocalDateTime` in `ParkingSlot` and `Ticket`).
+*   **Call-by-value and Defensive Copying**: Primitive types are passed by value. Immutable objects like `Ticket` (a record) and `LocalDateTime` inherently prevent modification, thus eliminating the need for defensive copying. The custom `Money` class is also immutable.
+*   **Records**: The `Ticket` class is implemented as a Java record, providing a concise way to declare immutable data carriers.
+*   **Custom Immutable Type**: The `Money` class serves as a custom immutable type for handling monetary values.
+*   **Lambdas (Predicate)**: Used in the `findVehicles` method to filter vehicles based on dynamic criteria.
+*   **`final` or `effectively final`**: Discussed in comments where lambdas capture variables from their enclosing scope.
+*   **Method References**: Used in `Main.java` (e.g., `foundVehicles.forEach(System.out::println)`).
+*   **Switch Expressions and Pattern Matching**: A switch expression is used in the overloaded `park` method in `ParkingService`. Pattern matching for `instanceof` is used in the `findVehicles` method in `Main.java` for more concise type checking and casting.
+*   **Sealed Classes and Interfaces**: The `Vehicle` class is a `sealed` abstract class, explicitly permitting only `Car` and `Motorbike` as its direct subclasses, enhancing type safety and design.
 
 ### 3.2. Java 25 Features
 
