@@ -42,7 +42,7 @@
 
 "Now, let's unpark the car we parked earlier. I'll choose option 2 and enter the slot number."
 
-"The system calculates the parking fee and displays the ticket details. The fee is calculated based on the duration of the stay and the vehicle type. The `Ticket` is a Java `record`, demonstrating immutability."
+"The system calculates the parking fee, represented by our custom `Money` class, and displays the ticket details. The fee is calculated based on the duration of the stay and the vehicle type. The `Ticket` is a Java `record`, demonstrating immutability."
 
 **(6:30-7:00) Demo: View details of specific slots (Varargs example)**
 
@@ -59,6 +59,8 @@
 "The `Car` and `Motorbike` constructors use flexible constructor bodies, another Java 25 feature, to validate the registration number before calling the super constructor."
 
 "In the `findVehicles` method, I've used pattern matching for `instanceof` to concisely check the type of a vehicle and cast it simultaneously."
+
+"The `Money` class serves as a custom immutable type for handling monetary values, ensuring precision and immutability."
 
 "I've also added comments throughout the code to explain concepts like `this()` vs `this.`, `super()` vs `super.`, call-by-value, defensive copying, and `final`/`effectively final`."
 
