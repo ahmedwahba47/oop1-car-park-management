@@ -1,3 +1,4 @@
+import com.carpark.model.Money;
 import com.carpark.exception.ParkingFullException;
 import com.carpark.model.Car;
 import com.carpark.model.Motorbike;

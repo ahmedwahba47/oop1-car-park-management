@@ -52,7 +52,7 @@ public class ParkingService {
         if (duration == 0) {
             duration = 1; // Minimum 1 hour fee
         }
-        double fee = vehicle.calculateFee(duration);
+        Money fee = vehicle.calculateFee(duration);
         slot.unpark();
         Ticket ticket = new Ticket(vehicle.getRegistrationNumber(), slotNumber, entryTime, exitTime, fee);
         ticketHistory.add(ticket);
@@ -85,7 +85,7 @@ public class ParkingService {
                 Vehicle vehicle = slot.getVehicle();
                 if (predicate.test(vehicle)) {
                     foundVehicles.add(vehicle);
-                }
+                } 
             }
         }
         return foundVehicles;

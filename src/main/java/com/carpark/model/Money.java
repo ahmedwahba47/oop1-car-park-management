@@ -17,6 +17,10 @@ public final class Money {
         return new Money(this.amount.add(other.amount).doubleValue());
     }
 
+    public double doubleValue() {
+        return amount.doubleValue();
+    }
+
     @Override
     public String toString() {
         return amount.toString();

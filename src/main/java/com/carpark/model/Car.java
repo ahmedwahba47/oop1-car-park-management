@@ -1,5 +1,7 @@
 package com.carpark.model;
 
+import com.carpark.model.Money;
+
 public final class Car extends Vehicle {
         /**
      * Constructor for Car.
@@ -16,7 +18,7 @@ public final class Car extends Vehicle {
     }
 
     @Override
-    public double calculateFee(long durationInHours) {
-        return durationInHours * 2.5;
+    public Money calculateFee(long durationInHours) {
+        return new Money(durationInHours * 2.5);
     }
 }

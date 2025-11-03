@@ -1,5 +1,7 @@
 package com.carpark.model;
 
+import com.carpark.model.Money;
+
 public final class Motorbike extends Vehicle {
         /**
      * Constructor for Motorbike.
@@ -16,7 +18,7 @@ public final class Motorbike extends Vehicle {
     }
 
     @Override
-    public double calculateFee(long durationInHours) {
-        return durationInHours * 1.5;
+    public Money calculateFee(long durationInHours) {
+        return new Money(durationInHours * 1.5);
     }
 }

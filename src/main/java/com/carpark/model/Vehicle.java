@@ -28,5 +28,5 @@ public sealed abstract class Vehicle implements Parkable permits Car, Motorbike 
         return type;
     }
 
-    public abstract double calculateFee(long durationInHours);
+    public abstract Money calculateFee(long durationInHours);
 }

@@ -10,7 +10,7 @@ abstract class Vehicle {
     +Vehicle(registrationNumber: String, type: VehicleType)
     +getRegistrationNumber(): String
     +getType(): VehicleType
-    +calculateFee(durationInHours: long): double {abstract}
+    +calculateFee(durationInHours: long): Money {abstract}
 }
 
 interface Parkable {
@@ -23,12 +23,12 @@ interface Parkable {
 
 class Car {
     +Car(registrationNumber: String)
-    +calculateFee(durationInHours: long): double
+    +calculateFee(durationInHours: long): Money
 }
 
 class Motorbike {
     +Motorbike(registrationNumber: String)
-    +calculateFee(durationInHours: long): double
+    +calculateFee(durationInHours: long): Money
 }
 
 class ParkingSlot {
@@ -51,7 +51,7 @@ record Ticket {
     +slotNumber: int
     +entryTime: LocalDateTime
     +exitTime: LocalDateTime
-    +fee: double
+    +fee: Money
 }
 
 class Money {
@@ -114,6 +114,8 @@ Main ..> ParkingService : uses
 Main ..> Car : creates
 Main ..> Motorbike : creates
 Main ..> Ticket : receives
+
+Ticket "1" *-- "1" Money : has
 
 Ticket ..> VehicleType : relates to
 Car ..> VehicleType : uses

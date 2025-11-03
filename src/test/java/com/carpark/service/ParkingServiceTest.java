@@ -26,7 +26,7 @@ class ParkingServiceTest {
         Ticket ticket = parkingService.unpark(slotNumber);
         assertEquals("CAR-001", ticket.registrationNumber());
         assertEquals(1, ticket.slotNumber());
-        assertTrue(ticket.fee() > 0);
+        assertTrue(ticket.fee().doubleValue() > 0);
     }
 
     @Test
