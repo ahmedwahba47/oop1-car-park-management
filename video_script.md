@@ -1,70 +1,12 @@
-# OOP1 Assignment Video Script
+# Video Script: Car Park Management System
 
-**(0:00-0:30) Introduction**
+## Introduction (0:00 - 0:45)
 
-"Hello, my name is [Your Name], and this is my submission for the OOP1 assignment. I have developed a Car Park Management System in Java."
+**(Visual: Title slide with "Car Park Management System" and your name)**
 
-"The application is a command-line tool that allows you to park and unpark vehicles, check the parking status, and calculate fees. It demonstrates various Java features, including new features from Java 25."
+"Hello everyone, and welcome to this demonstration of my Car Park Management System. My name is [Your Name], and this project was developed as part of the OOP1 assignment, showcasing various Java programming principles and features, including some of the exciting new additions in Java 25. The application is a command-line tool that allows you to park and unpark vehicles, check the parking status, and calculate fees."
 
-**(0:30-1:15) Project Structure in Eclipse**
-
-"Here is the project structure in Eclipse. It's a Maven project, which helps manage dependencies and the build process."
-
-"I have organized the code into packages: `com.carpark.model` for the data classes, `com.carpark.service` for the business logic, and `com.carpark.exception` for custom exceptions."
-
-"The `pom.xml` file is configured to use Java 25 and includes the necessary dependencies for JUnit 5."
-
-**(1:15-2:00) Running the Application**
-
-"Now, let's run the application. I'll right-click on `Main.java` and choose 'Run As > Java Application'."
-
-"The application starts and presents a menu with several options."
-
-**(2:00-3:30) Demo: Parking a Vehicle**
-
-"Let's park a car. I'll choose option 1, enter 'CAR' as the vehicle type, and provide a registration number. Notice that the input validation is now improved, so it won't ask for a registration number if the vehicle type is invalid."
-
-"The system confirms that the car has been parked and assigns it a slot number."
-
-"Now, let's park a motorbike."
-
-"If I try to park another vehicle when the car park is full, the system will display a 'Parking Full' message."
-
-**(3:30-4:30) Demo: Displaying Parking Status**
-
-"Option 3 allows us to see the current status of the car park. It shows which slots are occupied and by which vehicles. This feature uses a `StringBuilder` internally for efficient string manipulation."
-
-**(4:30-5:15) Demo: Find vehicles by type**
-
-"Option 4 allows us to find vehicles by their type. I'll choose option 4 and enter 'CAR'. The system will then list all parked cars. This feature uses a lambda expression with pattern matching for `instanceof` to filter vehicles."
-
-**(5:15-6:30) Demo: Unparking a Vehicle**
-
-"Now, let's unpark the car we parked earlier. I'll choose option 2 and enter the slot number."
-
-"The system calculates the parking fee, represented by our custom `Money` class, and displays the ticket details. The fee is calculated based on the duration of the stay and the vehicle type. The `Ticket` is a Java `record`, demonstrating immutability."
-
-**(6:30-7:00) Demo: View details of specific slots (Varargs example)**
-
-"Option 5 demonstrates the use of varargs. I can enter multiple slot numbers, and the system will display their details."
-
-**(7:00-9:30) Code Highlights**
-
-"I'd like to highlight a few code features."
-
-"The `Vehicle` class is a `sealed` class, which restricts its subclasses to `Car` and `Motorbike`. It also implements the `Parkable` interface, which demonstrates `static`, `default`, and `private` methods within an interface."
-
-"The `Main` class uses an instance `main` method, a new feature in Java 25. This simplifies the entry point of the application."
-
-"The `Car` and `Motorbike` constructors use flexible constructor bodies, another Java 25 feature, to validate the registration number before calling the super constructor."
-
-"In the `findVehicles` method, I've used pattern matching for `instanceof` to concisely check the type of a vehicle and cast it simultaneously."
-
-"The `Money` class serves as a custom immutable type for handling monetary values, ensuring precision and immutability."
-
-"I've also added comments throughout the code to explain concepts like `this()` vs `this.`, `super()` vs `super.`, call-by-value, defensive copying, and `final`/`effectively final`."
-
-## Project Overview & User Stories (0:30 - 1:30)
+## Project Overview & User Stories (0:45 - 1:45)
 
 **(Visual: Briefly show the running application, then switch to a slide listing user stories)**
 
@@ -76,7 +18,7 @@
 *   "**Find vehicles**: The system can locate vehicles based on specific criteria, such as vehicle type."
 *   "**Handle edge cases**: The system gracefully handles scenarios like a full car park or invalid user input."
 
-### 2.1. UML Diagram Overview (1:30 - 2:30)
+## UML Diagram Overview (1:45 - 3:15)
 
 **(Visual: Display the UML_Diagram.puml rendered as a clear image)**
 
@@ -90,10 +32,49 @@
 
 "This visual representation helps us understand how **encapsulation** is applied within each class, with private attributes and public methods. It also hints at **polymorphism**, as different `Vehicle` types will have their own implementations for methods like `calculateFee`."
 
-## Code Walkthrough - Key Features (2:30 - 7:00)
+## Project Structure & Running Application (3:15 - 4:00)
 
-**(9:30-10:00) Conclusion**
+**(Visual: Transition to IDE, showing project structure in Eclipse, then running the application)**
 
-"This project has been a great opportunity to apply the concepts learned in the OOP1 module and to explore the new features in Java 25."
+"Here is the project structure in Eclipse. It's a Maven project, which helps manage dependencies and the build process. I have organized the code into packages: `com.carpark.model` for the data classes, `com.carpark.service` for the business logic, and `com.carpark.exception` for custom exceptions. The `pom.xml` file is configured to use Java 25 and includes the necessary dependencies for JUnit 5."
 
-"Thank you for watching."
+"Now, let's run the application. I'll right-click on `Main.java` and choose 'Run As > Java Application'. The application starts and presents a menu with several options."
+
+## Live Demo (4:00 - 7:30)
+
+**(Visual: Live demo of the application, showing parking, unparking, status, and finding vehicles)**
+
+"Let's start with a live demonstration of the system's functionality."
+
+*   "**Parking a Vehicle**: I'll choose option 1, enter 'CAR' as the vehicle type, and provide a registration number. The system confirms that the car has been parked and assigns it a slot number. I'll also park a motorbike. If I try to park another vehicle when the car park is full, the system will display a 'Parking Full' message."
+*   "**Displaying Parking Status**: Option 3 allows us to see the current status of the car park. It shows which slots are occupied and by which vehicles. This feature uses a `StringBuilder` internally for efficient string manipulation."
+*   "**Find vehicles by type**: Option 4 allows us to find vehicles by their type. I'll choose option 4 and enter 'CAR'. The system will then list all parked cars. This feature uses a lambda expression with pattern matching for `instanceof` to filter vehicles."
+*   "**Unparking a Vehicle**: Now, let's unpark the car we parked earlier. I'll choose option 2 and enter the slot number. The system calculates the parking fee, represented by our custom `Money` class, and displays the ticket details. The fee is calculated based on the duration of the stay and the vehicle type. The `Ticket` is a Java `record`, demonstrating immutability."
+*   "**View details of specific slots (Varargs example)**: Option 5 demonstrates the use of varargs. I can enter multiple slot numbers, and the system will display their details."
+
+## Code Highlights (7:30 - 9:30)
+
+**(Visual: Transition to IDE, showing code snippets as you discuss them)**
+
+"Now, let's dive into the code and highlight some of the core object-oriented programming concepts and advanced Java features implemented in this project."
+
+*   "**Classes and Objects**: We have classes like `Vehicle`, `Car`, `Motorbike`, `ParkingSlot`, `Ticket`, `Money`, and `ParkingService`. Each object represents a real-world entity within our car park domain."
+*   "**Encapsulation**: All our model classes use private fields with public getters, ensuring data integrity and controlled access."
+*   "**Inheritance and Polymorphism**: `Car` and `Motorbike` extend the `Vehicle` abstract class. This allows us to use polymorphism, for example, when calculating fees, where each vehicle type has its own `calculateFee` implementation."
+*   "**Interfaces**: The `Parkable` interface defines common behavior for parkable entities, demonstrating `static`, `default`, and `private` methods within an interface."
+*   "**Exceptions**: We use custom exceptions like `ParkingFullException` and standard `IllegalArgumentException` for robust error handling."
+*   "**Enums**: `VehicleType` and `ParkingStatus` enums provide type-safe representations for fixed sets of constants."
+*   "**Arrays and Java Core API**: Parking slots are managed using an array, and we extensively use `String`, `StringBuilder`, `List`/`ArrayList`, and the `java.time` package for date and time operations."
+*   "**Records**: The `Ticket` class is a Java record, offering a concise and immutable way to store parking ticket information."
+*   "**Custom Immutable Type**: Our `Money` class is a custom immutable type, ensuring that monetary values are handled safely and consistently."
+*   "**Lambdas and Method References**: We utilize lambdas with `Predicate` for flexible vehicle searching and method references for cleaner code, such as `forEach(System.out::println)`."
+*   "**Switch Expressions and Pattern Matching**: The `ParkingService` uses switch expressions for vehicle creation, and pattern matching for `instanceof` is demonstrated in `Main.java` for cleaner type checking."
+*   "**Sealed Classes**: The `Vehicle` class is a sealed abstract class, explicitly controlling its subclass hierarchy to `Car` and `Motorbike`, enhancing type safety."
+*   "**Java 25 Specific Features**: This project also incorporates some of the exciting new features introduced in Java 25. Our `Main` class uses an **Instance Main Method (JEP 512)**, simplifying the traditional `public static void main` signature. In `Car` and `Motorbike` constructors, we demonstrate **Flexible Constructor Bodies (JEP 513)**, allowing us to perform validation logic *before* calling the `super()` constructor. This provides greater control during object initialization."
+*   "I've also added comments throughout the code to explain concepts like `this()` vs `this.`, `super()` vs `super.`, call-by-value, defensive copying, and `final`/`effectively final`."
+
+## Conclusion (9:30 - 10:00)
+
+**(Visual: Concluding slide with "Thank You" and contact information if desired)**
+
+"That concludes the demonstration of my Car Park Management System. This project has been a great opportunity to apply the concepts learned in the OOP1 module and to explore the new features in Java 25. Thank you for watching!
