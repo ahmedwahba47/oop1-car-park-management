@@ -108,7 +108,7 @@ public class ParkingService {
         for (int slotNumber : slotNumbers) {
             if (slotNumber >= 1 && slotNumber <= slots.length) {
                 ParkingSlot slot = slots[slotNumber - 1];
-                String status = slot.isAvailable() ? "Available" : "Occupied by " + slot.getVehicle().getRegistrationNumber();
+                String status = slot.isAvailable() ? "Available" : "Occupied by " + slot.getVehicle().getType() + " (" + slot.getVehicle().getRegistrationNumber() + ")";
                 System.out.println("Slot " + slot.getSlotNumber() + ": " + status);
             } else {
                 System.out.println("Slot " + slotNumber + ": Invalid slot number.");
