@@ -1,18 +1,19 @@
-package com.carpark.service;
-
 import com.carpark.exception.ParkingFullException;
 import com.carpark.model.*;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Predicate;
 
 public class ParkingService {
     private final ParkingSlot[] slots;
     private final List<Ticket> ticketHistory = new ArrayList<>();
+    private final Set<String> parkedRegistrationNumbers = new HashSet<>();
 
     public ParkingService(int capacity) {
         this.slots = new ParkingSlot[capacity];
@@ -22,9 +23,14 @@ public class ParkingService {
     }
 
     public int park(Vehicle vehicle) throws ParkingFullException {
+        if (parkedRegistrationNumbers.contains(vehicle.getRegistrationNumber())) {
+            throw new IllegalArgumentException("Vehicle with registration number " + vehicle.getRegistrationNumber() + " is already parked.");
+        }
+
         for (ParkingSlot slot : slots) {
             if (slot.isAvailable()) {
                 slot.park(vehicle);
+                parkedRegistrationNumbers.add(vehicle.getRegistrationNumber());
                 return slot.getSlotNumber();
             }
         }
@@ -54,6 +60,7 @@ public class ParkingService {
         }
         Money fee = vehicle.calculateFee(duration);
         slot.unpark();
+        parkedRegistrationNumbers.remove(vehicle.getRegistrationNumber());
         Ticket ticket = new Ticket(vehicle.getRegistrationNumber(), slotNumber, entryTime, exitTime, fee);
         ticketHistory.add(ticket);
         return ticket;
@@ -67,7 +74,7 @@ public class ParkingService {
         StringBuilder sb = new StringBuilder();
         sb.append("Parking Status:\n");
         for (ParkingSlot slot : slots) {
-            String status = slot.isAvailable() ? "Available" : "Occupied by " + slot.getVehicle().getRegistrationNumber();
+            String status = slot.isAvailable() ? "Available" : "Occupied by " + slot.getVehicle().getType() + " (" + slot.getVehicle().getRegistrationNumber() + ")";
             sb.append("Slot ").append(slot.getSlotNumber()).append(": ").append(status).append("\n");
         }
         System.out.println(sb.toString());

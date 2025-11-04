@@ -43,10 +43,11 @@ void main() {
 }
 
 private void parkVehicle(Scanner scanner, ParkingService parkingService) {
-    System.out.print("Enter vehicle type (CAR/MOTORBIKE): ");
-    String type = scanner.nextLine();
+    System.out.print("Enter vehicle type (CAR/MOTORBIKE or C/MC): ");
+    String typeInput = scanner.nextLine();
+    String type = getVehicleTypeFromInput(typeInput);
 
-    if (!"CAR".equalsIgnoreCase(type) && !"MOTORBIKE".equalsIgnoreCase(type)) {
+    if (type == null) {
         System.out.println("Invalid vehicle type.");
         return;
     }
@@ -63,7 +64,7 @@ private void parkVehicle(Scanner scanner, ParkingService parkingService) {
             slotNumber = parkingService.park(new Motorbike(regNumber));
             System.out.println("Motorbike parked at slot " + slotNumber);
         }
-    } catch (ParkingFullException e) {
+    } catch (ParkingFullException | IllegalArgumentException e) {
         System.out.println(e.getMessage());
     }
 }
@@ -83,8 +84,14 @@ private void unparkVehicle(Scanner scanner, ParkingService parkingService) {
 }
 
 private void findVehicles(Scanner scanner, ParkingService parkingService) {
-    System.out.print("Enter vehicle type to find (CAR/MOTORBIKE): ");
-    String type = scanner.nextLine();
+    System.out.print("Enter vehicle type to find (CAR/MOTORBIKE or C/MC): ");
+    String typeInput = scanner.nextLine();
+    String type = getVehicleTypeFromInput(typeInput);
+
+    if (type == null) {
+        System.out.println("Invalid vehicle type.");
+        return;
+    }
 
     List<com.carpark.model.ParkingSlot> foundSlots;
     if ("CAR".equalsIgnoreCase(type)) {
@@ -118,4 +125,12 @@ private void viewSpecificSlots(Scanner scanner, ParkingService parkingService) {
         }
     }
     parkingService.printSlotDetails(slotNumbers);
+}
+
+private String getVehicleTypeFromInput(String input) {
+    return switch (input.toLowerCase()) {
+        case "car", "c" -> "CAR";
+        case "motorbike", "mc" -> "MOTORBIKE";
+        default -> null;
+    };
 }
