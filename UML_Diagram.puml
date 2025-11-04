@@ -52,6 +52,7 @@ record Ticket {
     +entryTime: LocalDateTime
     +exitTime: LocalDateTime
     +fee: Money
+    +toString(): String
 }
 
 class Money {
@@ -65,12 +66,13 @@ class Money {
 class ParkingService {
     -slots: ParkingSlot[]
     -ticketHistory: List<Ticket>
+    -parkedRegistrationNumbers: Set<String>
     +ParkingService(capacity: int)
-    +park(vehicle: Vehicle): int
-    +unpark(slotNumber: int): Ticket
+    +park(vehicle: Vehicle): int throws ParkingFullException, IllegalArgumentException
+    +unpark(slotNumber: int): Ticket throws IllegalArgumentException
     +displayParkingStatus(): void
-    +findVehicles(predicate: Predicate<Vehicle>): List<Vehicle>
-    +park(registrationNumber: String, type: VehicleType): int
+    +findVehicles(predicate: Predicate<Vehicle>): List<ParkingSlot>
+    +park(registrationNumber: String, type: VehicleType): int throws ParkingFullException
     +printSlotDetails(slotNumbers: int...): void
 }
 
@@ -79,6 +81,7 @@ class Main {
     -unparkVehicle(scanner: Scanner, parkingService: ParkingService): void
     -findVehicles(scanner: Scanner, parkingService: ParkingService): void
     -viewSpecificSlots(scanner: Scanner, parkingService: ParkingService): void
+    -getVehicleTypeFromInput(input: String): String
 }
 
 enum VehicleType {
@@ -108,12 +111,16 @@ ParkingSlot "1" *-- "1" ParkingStatus : has
 
 ParkingService "1" *-- "1..*" ParkingSlot : manages
 ParkingService "1" *-- "0..*" Ticket : records
+ParkingService "1" *-- "0..*" String : tracks parked registrations
 ParkingService ..> ParkingFullException : throws
+ParkingService ..> IllegalArgumentException : throws
 
 Main ..> ParkingService : uses
 Main ..> Car : creates
 Main ..> Motorbike : creates
 Main ..> Ticket : receives
+Main ..> Scanner : uses
+Main ..> VehicleType : uses
 
 Ticket "1" *-- "1" Money : has
 
