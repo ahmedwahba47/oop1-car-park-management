@@ -78,17 +78,17 @@ public class ParkingService {
      * The predicate is a lambda expression, which is a closure.
      * It can access variables from its enclosing scope (effectively final variables).
      */
-    public List<Vehicle> findVehicles(Predicate<Vehicle> predicate) {
-        List<Vehicle> foundVehicles = new ArrayList<>();
+    public List<ParkingSlot> findVehicles(Predicate<Vehicle> predicate) {
+        List<ParkingSlot> foundSlots = new ArrayList<>();
         for (ParkingSlot slot : slots) {
             if (!slot.isAvailable()) {
                 Vehicle vehicle = slot.getVehicle();
                 if (predicate.test(vehicle)) {
-                    foundVehicles.add(vehicle);
-                } 
+                    foundSlots.add(slot);
+                }
             }
         }
-        return foundVehicles;
+        return foundSlots;
     }
     
     // Overloaded park method

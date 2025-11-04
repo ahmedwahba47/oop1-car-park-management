@@ -86,23 +86,21 @@ private void findVehicles(Scanner scanner, ParkingService parkingService) {
     System.out.print("Enter vehicle type to find (CAR/MOTORBIKE): ");
     String type = scanner.nextLine();
 
-    List<Vehicle> foundVehicles;
+    List<com.carpark.model.ParkingSlot> foundSlots;
     if ("CAR".equalsIgnoreCase(type)) {
-        // Pattern matching for instanceof (Java 16+)
-        foundVehicles = parkingService.findVehicles(v -> v instanceof Car car && car.getType() == com.carpark.model.VehicleType.CAR);
+        foundSlots = parkingService.findVehicles(v -> v instanceof Car car && car.getType() == com.carpark.model.VehicleType.CAR);
     } else if ("MOTORBIKE".equalsIgnoreCase(type)) {
-        // Pattern matching for instanceof (Java 16+)
-        foundVehicles = parkingService.findVehicles(v -> v instanceof Motorbike motorbike && motorbike.getType() == com.carpark.model.VehicleType.MOTORBIKE);
+        foundSlots = parkingService.findVehicles(v -> v instanceof Motorbike motorbike && motorbike.getType() == com.carpark.model.VehicleType.MOTORBIKE);
     } else {
         System.out.println("Invalid vehicle type.");
         return;
     }
 
-    if (foundVehicles.isEmpty()) {
+    if (foundSlots.isEmpty()) {
         System.out.println("No vehicles of type " + type + " found.");
     } else {
         System.out.println("Found vehicles of type " + type + ":");
-        foundVehicles.forEach(v -> System.out.println(v.getRegistrationNumber()));
+        foundSlots.forEach(slot -> System.out.println("Slot " + slot.getSlotNumber() + ": " + slot.getVehicle().getRegistrationNumber()));
     }
 }
 
