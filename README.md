@@ -122,10 +122,3 @@ The project demonstrates a comprehensive application of Java features:
     *   **Instance Main Methods (JEP 512)**: Simplifies the application's entry point.
     *   **Flexible Constructor Bodies (JEP 513)**: Allows for validation logic before `super()` calls in constructors.
 
-## Contributing
-
-Feel free to fork the repository, make improvements, and submit pull requests.
-
-## License
-
-This project is open-source and available under the MIT License.
