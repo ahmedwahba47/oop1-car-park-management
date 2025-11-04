@@ -64,6 +64,34 @@
 
 "I've also added comments throughout the code to explain concepts like `this()` vs `this.`, `super()` vs `super.`, call-by-value, defensive copying, and `final`/`effectively final`."
 
+## Project Overview & User Stories (0:30 - 1:30)
+
+**(Visual: Briefly show the running application, then switch to a slide listing user stories)**
+
+"The application is a command-line based tool designed to manage parking slots. It allows users to perform several key actions:"
+
+*   "**Park a vehicle**: Users can park cars or motorbikes, and the system automatically assigns an available slot."
+*   "**Unpark a vehicle**: Vehicles can be unparked by specifying the slot number, and the system calculates the parking fee."
+*   "**View parking status**: Users can see which slots are occupied and by whom."
+*   "**Find vehicles**: The system can locate vehicles based on specific criteria, such as vehicle type."
+*   "**Handle edge cases**: The system gracefully handles scenarios like a full car park or invalid user input."
+
+### 2.1. UML Diagram Overview (1:30 - 2:30)
+
+**(Visual: Display the UML_Diagram.puml rendered as a clear image)**
+
+"Before we dive into the code, let's take a moment to look at the UML diagram for our Car Park Management System. This diagram provides a high-level visual representation of the system's structure, showing the classes, their attributes, methods, and the relationships between them. It's an excellent way to understand the overall design at a glance."
+
+"As you can see, we have key classes like `Vehicle`, which is an abstract class, with `Car` and `Motorbike` extending it. This clearly illustrates **inheritance** and how specific vehicle types inherit common properties and behaviors. The `Vehicle` class is also a **sealed class**, explicitly defining its permitted subclasses, which enhances type safety."
+
+"We also have the `ParkingSlot` class, which manages individual parking spaces, and the `Ticket` record, an **immutable data carrier** that stores details about a parked vehicle's session. The `Money` class, a **custom immutable type**, is used within the `Ticket` to handle fees, ensuring consistency and preventing accidental modification."
+
+"The `ParkingService` class acts as the central orchestrator, managing parking operations and interacting with `ParkingSlot` and `Ticket` objects. You can also observe the `Parkable` interface, which defines a contract for objects that can be parked, demonstrating the use of **interfaces** in our design. This interface includes `static`, `default`, and `private` methods, showcasing advanced interface features."
+
+"This visual representation helps us understand how **encapsulation** is applied within each class, with private attributes and public methods. It also hints at **polymorphism**, as different `Vehicle` types will have their own implementations for methods like `calculateFee`."
+
+## Code Walkthrough - Key Features (2:30 - 7:00)
+
 **(9:30-10:00) Conclusion**
 
 "This project has been a great opportunity to apply the concepts learned in the OOP1 module and to explore the new features in Java 25."
