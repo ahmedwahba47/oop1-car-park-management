@@ -8,12 +8,12 @@ The primary goal of this project is to demonstrate a comprehensive understanding
 
 ## 2. User Stories Completed
 
-The application implements the following user stories, which correspond to the features listed in the assignment brief:
+The application implements the following user stories, which correspond to the features listed in the assignment brief, along with several enhancements:
 
-*   **Park a vehicle**: Users can park a vehicle by specifying its type (Car or Motorbike) and registration number. The system assigns the vehicle to the first available parking slot.
+*   **Park a vehicle**: Users can park a vehicle by specifying its type (Car or Motorbike) and registration number. The system assigns the vehicle to the first available parking slot. **New**: The system now prevents parking vehicles with duplicate registration numbers. Vehicle type input also accepts shortcuts (e.g., 'c' for CAR, 'mc' for MOTORBIKE).
 *   **Unpark a vehicle**: Users can unpark a vehicle by providing the slot number. The system calculates the parking fee based on the duration of the stay and the vehicle type.
-*   **Parking status**: Users can view the current status of all parking slots, including which slots are occupied and by which vehicles.
-*   **Find vehicles**: Users can find parked vehicles by their type.
+*   **Parking status**: Users can view the current status of all parking slots, including which slots are occupied and by which vehicles. **Enhanced**: The status now clearly indicates the vehicle type (e.g., "Occupied by Car (abc123)").
+*   **Find vehicles**: Users can find parked vehicles by their type. **Enhanced**: The output now includes the slot number where the vehicle is parked. Vehicle type input also accepts shortcuts.
 *   **View details of specific slots**: Users can view details of multiple parking slots by providing their numbers, demonstrating the use of varargs.
 *   **Handle full car park**: If a user tries to park a vehicle when the car park is full, the system gracefully handles the situation by displaying a "Parking Full" message.
 *   **Handle invalid input**: The application validates user input and provides appropriate error messages for invalid slot numbers or vehicle types.
@@ -34,14 +34,14 @@ The project successfully implements all the fundamental and advanced Java featur
 *   **Inheritance**: `Car` and `Motorbike` classes extend the `Vehicle` abstract class, showcasing hierarchical relationships.
 *   **Overriding and Polymorphism**: The `calculateFee` method is overridden in `Car` and `Motorbike` subclasses, demonstrating polymorphic behavior.
 *   **`super()` and `super.`**: `super()` is explicitly used in subclass constructors (`Car`, `Motorbike`) to invoke the parent class constructor.
-*   **Exceptions**: Both checked (`ParkingFullException`) and unchecked (`IllegalArgumentException`) exceptions are used for robust error handling.
+*   **Exceptions**: Both checked (`ParkingFullException`) and unchecked (`IllegalArgumentException`) exceptions are used for robust error handling, including a new check for duplicate registration numbers in `ParkingService`.
 *   **Enums**: `VehicleType` and `ParkingStatus` enums are used for type-safe representation of fixed sets of constants.
 *   **Arrays**: Parking slots are managed using an array in the `ParkingService`.
-*   **Java Core API**: Extensive use of `String`, `StringBuilder` (for efficient string manipulation in `displayParkingStatus`), `List`/`ArrayList` (for `ticketHistory` and `foundVehicles`), and `java.time` package (for `LocalDateTime` in `ParkingSlot` and `Ticket`).
+*   **Java Core API**: Extensive use of `String`, `StringBuilder` (for efficient string manipulation in `displayParkingStatus`), `List`/`ArrayList` (for `ticketHistory`), `Set`/`HashSet` (for tracking parked registration numbers), and `java.time` package (for `LocalDateTime` in `ParkingSlot` and `Ticket`).
 *   **Call-by-value and Defensive Copying**: Primitive types are passed by value. Immutable objects like `Ticket` (a record) and `LocalDateTime` inherently prevent modification, thus eliminating the need for defensive copying. The custom `Money` class is also immutable.
-*   **Records**: The `Ticket` class is implemented as a Java record, providing a concise way to declare immutable data carriers.
+*   **Records**: The `Ticket` class is implemented as a Java record, providing a concise way to declare immutable data carriers. It now includes a custom `toString()` method to format `LocalDateTime` objects to the second.
 *   **Custom Immutable Type**: The `Money` class serves as a custom immutable type for handling monetary values.
-*   **Lambdas (Predicate)**: Used in the `findVehicles` method to filter vehicles based on dynamic criteria.
+*   **Lambdas (Predicate)**: Used in the `findVehicles` method to filter vehicles based on dynamic criteria. The `ParkingService.findVehicles` method now returns a `List<ParkingSlot>` to provide slot information.
 *   **`final` or `effectively final`**: Discussed in comments where lambdas capture variables from their enclosing scope.
 *   **Method References**: Used in `Main.java` (e.g., `foundVehicles.forEach(System.out::println)`).
 *   **Switch Expressions and Pattern Matching**: A switch expression is used in the overloaded `park` method in `ParkingService`. Pattern matching for `instanceof` is used in the `findVehicles` method in `Main.java` for more concise type checking and casting.
