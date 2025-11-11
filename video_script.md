@@ -67,6 +67,7 @@
 *   "**Arrays and Java Core API**: Parking slots are managed using an array, and we extensively use `String`, `StringBuilder`, `List`/`ArrayList`, `Set`/`HashSet` (for tracking parked registration numbers), and the `java.time` package for date and time operations."
 *   "**Records**: The `Ticket` class is a Java record, offering a concise and immutable way to store parking ticket information. It now includes a custom `toString()` method to format `LocalDateTime` objects to the second."
 
+*   "**LVTI (Local-Variable Type Inference - `var`)**: We also make selective use of the `var` keyword in `Main.java` to improve code readability. For example, when declaring the `ticket` and `type` variables, `var` allows for more concise code without sacrificing clarity."
 *   "**Custom Immutable Type**: Our `Money` class is a custom immutable type, ensuring that monetary values are handled safely and consistently."
 *   "**Lambdas and Method References**: We utilize lambdas with `Predicate` for flexible vehicle searching. The `ParkingService.findVehicles` method now returns a `List<ParkingSlot>`, allowing us to easily retrieve both the vehicle and its slot information. Method references are used for cleaner code, such as `forEach(System.out::println)`."
 *   "**Switch Expressions and Pattern Matching**: A switch expression is used in the overloaded `park` method in `ParkingService`. Pattern matching for `instanceof` is used in the `findVehicles` method in `Main.java` for more concise type checking and casting."

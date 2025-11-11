@@ -28,7 +28,7 @@ The project successfully implements all the fundamental and advanced Java featur
 *   **`this()` and `this.`**: Demonstrated in constructors (e.g., `Vehicle` class) to distinguish instance variables from parameters.
 *   **Method Overloading**: The `ParkingService` class includes overloaded `park` methods, allowing vehicles to be parked using different parameters.
 *   **Varargs**: The `ParkingService.printSlotDetails` method demonstrates the use of variable-arity arguments, allowing users to view details of multiple slots.
-*   **LVTI (Local-Variable Type Inference - `var`)**: Used where appropriate for concise code.
+*   **LVTI (Local-Variable Type Inference - `var`)**: Used selectively in `Main.java` to improve code clarity in specific instances, such as when retrieving a `Ticket` object or determining the vehicle type from user input.
 *   **Encapsulation**: Achieved through private fields and public getter methods across all model classes.
 *   **Interfaces**: The `Parkable` interface is introduced, which the `Vehicle` class implements. This interface demonstrates `static`, `default`, and `private` methods within an interface.
 *   **Inheritance**: `Car` and `Motorbike` classes extend the `Vehicle` abstract class, showcasing hierarchical relationships.

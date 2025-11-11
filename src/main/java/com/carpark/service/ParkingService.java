@@ -1,3 +1,5 @@
+package com.carpark.service;
+
 import com.carpark.exception.ParkingFullException;
 import com.carpark.model.*;
 

@@ -111,7 +111,6 @@ ParkingSlot "1" *-- "1" ParkingStatus : has
 
 ParkingService "1" *-- "1..*" ParkingSlot : manages
 ParkingService "1" *-- "0..*" Ticket : records
-ParkingService "1" *-- "0..*" String : tracks parked registrations
 ParkingService ..> ParkingFullException : throws
 ParkingService ..> IllegalArgumentException : throws
 
@@ -119,7 +118,6 @@ Main ..> ParkingService : uses
 Main ..> Car : creates
 Main ..> Motorbike : creates
 Main ..> Ticket : receives
-Main ..> Scanner : uses
 Main ..> VehicleType : uses
 
 Ticket "1" *-- "1" Money : has

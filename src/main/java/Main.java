@@ -45,7 +45,7 @@ void main() {
 private void parkVehicle(Scanner scanner, ParkingService parkingService) {
     System.out.print("Enter vehicle type (CAR/MOTORBIKE or C/MC): ");
     String typeInput = scanner.nextLine();
-    String type = getVehicleTypeFromInput(typeInput);
+    var type = getVehicleTypeFromInput(typeInput);
 
     if (type == null) {
         System.out.println("Invalid vehicle type.");
@@ -75,7 +75,7 @@ private void unparkVehicle(Scanner scanner, ParkingService parkingService) {
     scanner.nextLine(); // consume newline
 
     try {
-        Ticket ticket = parkingService.unpark(slotNumber);
+        var ticket = parkingService.unpark(slotNumber);
         System.out.println("Vehicle unparked. Fee: " + ticket.fee());
         System.out.println("Ticket details: " + ticket);
     } catch (IllegalArgumentException e) {
