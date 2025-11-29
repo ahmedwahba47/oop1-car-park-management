@@ -38,6 +38,15 @@ public class ParkingService {
         throw new ParkingFullException("Car park is full.");
     }
 
+    // Overloaded park method
+    public int park(String registrationNumber, VehicleType type) throws ParkingFullException {
+        Vehicle vehicle = switch (type) {
+            case CAR -> new Car(registrationNumber);
+            case MOTORBIKE -> new Motorbike(registrationNumber);
+        };
+        return park(vehicle);
+    }
+
     /**
      * Unparks a vehicle from a slot and returns a ticket.
      * This method demonstrates call-by-value for primitive types (slotNumber)
