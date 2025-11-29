@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 /**
  * A Java Record representing a parking ticket.
  *
- * RECORDS (Java 16+) automatically provide:
+ * RECORDS automatically provide:
  * - A canonical constructor
  * - Getter methods for all components (registrationNumber(), slotNumber(), etc.)
  * - equals() and hashCode() implementations

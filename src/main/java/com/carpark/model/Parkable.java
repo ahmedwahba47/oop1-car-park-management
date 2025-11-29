@@ -1,6 +1,10 @@
 package com.carpark.model;
 
 public interface Parkable {
+    
+    // Abstract method
+    String getRegistrationNumber();
+    
     // Static method
     static String getParkingInfo() {
         return "This is a parkable vehicle.";
@@ -12,12 +16,10 @@ public interface Parkable {
         printVin();
     }
 
-    // Private method (from Java 9)
+    // Private method
     private void printVin() {
         System.out.println("VIN: " + generateVin());
     }
-
-    String getRegistrationNumber();
 
     // Private method
     private String generateVin() {

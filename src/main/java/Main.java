@@ -100,7 +100,7 @@ private void unparkVehicle(Scanner scanner, ParkingService parkingService) {
 /**
  * Demonstrates LAMBDAS with PREDICATE, PATTERN MATCHING, and METHOD REFERENCES.
  *
- * PATTERN MATCHING (Java 21+): 'v instanceof Car car' both checks the type AND
+ * PATTERN MATCHING: 'v instanceof Car car' both checks the type AND
  * creates a variable 'car' of type Car in one expression.
  *
  * METHOD REFERENCE: 'System.out::println' is shorthand for 'x -> System.out.println(x)'
@@ -153,7 +153,7 @@ private void viewSpecificSlots(Scanner scanner, ParkingService parkingService) {
 }
 
 /**
- * Demonstrates SWITCH EXPRESSION (Java 14+).
+ * Demonstrates SWITCH EXPRESSION
  *
  * SWITCH EXPRESSION vs SWITCH STATEMENT:
  * - Switch EXPRESSION returns a value (assigned to variable or returned)

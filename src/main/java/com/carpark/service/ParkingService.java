@@ -104,15 +104,6 @@ public class ParkingService {
         }
         return foundSlots;
     }
-    
-    // Overloaded park method
-    public int park(String registrationNumber, VehicleType type) throws ParkingFullException {
-        Vehicle vehicle = switch (type) {
-            case CAR -> new Car(registrationNumber);
-            case MOTORBIKE -> new Motorbike(registrationNumber);
-        };
-        return park(vehicle);
-    }
 
     /**
      * Prints the details of multiple slots using varargs.
