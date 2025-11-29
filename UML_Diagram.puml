@@ -2,86 +2,92 @@
 ' Set a more modern theme
 !theme mars
 
+title Car Park Management System - Class Diagram
+
 ' Define classes, interfaces, and enums
 
-abstract class Vehicle {
-    -registrationNumber: String
-    -type: VehicleType
-    +Vehicle(registrationNumber: String, type: VehicleType)
-    +getRegistrationNumber(): String
-    +getType(): VehicleType
-    +calculateFee(durationInHours: long): Money {abstract}
-}
-
 interface Parkable {
-    +getParkingInfo(): String {static}
-    +printRegistration(): void {default}
-    -printVin(): void {private}
-    +getRegistrationNumber(): String
-    -generateVin(): String {private}
+    + {static} getParkingInfo(): String
+    + {default} printRegistration(): void
+    - printVin(): void
+    + getRegistrationNumber(): String
+    - generateVin(): String
 }
 
-class Car {
-    +Car(registrationNumber: String)
-    +calculateFee(durationInHours: long): Money
+abstract class Vehicle <<sealed>> {
+    - registrationNumber: String
+    - type: VehicleType
+    + Vehicle(registrationNumber: String, type: VehicleType)
+    + Vehicle(registrationNumber: String)
+    + getRegistrationNumber(): String
+    + getType(): VehicleType
+    + {abstract} calculateFee(durationInHours: long): Money
 }
 
-class Motorbike {
-    +Motorbike(registrationNumber: String)
-    +calculateFee(durationInHours: long): Money
+class Car <<final>> {
+    + Car(registrationNumber: String)
+    + calculateFee(durationInHours: long): Money
+    + toString(): String
+}
+
+class Motorbike <<final>> {
+    + Motorbike(registrationNumber: String)
+    + calculateFee(durationInHours: long): Money
 }
 
 class ParkingSlot {
-    -slotNumber: int
-    -vehicle: Vehicle
-    -status: ParkingStatus
-    -entryTime: LocalDateTime
-    +ParkingSlot(slotNumber: int)
-    +getSlotNumber(): int
-    +getVehicle(): Vehicle
-    +getStatus(): ParkingStatus
-    +getEntryTime(): LocalDateTime
-    +park(vehicle: Vehicle): void
-    +unpark(): void
-    +isAvailable(): boolean
+    - slotNumber: int
+    - vehicle: Vehicle
+    - status: ParkingStatus
+    - entryTime: LocalDateTime
+    + ParkingSlot(slotNumber: int)
+    + getSlotNumber(): int
+    + getVehicle(): Vehicle
+    + getStatus(): ParkingStatus
+    + getEntryTime(): LocalDateTime
+    + park(vehicle: Vehicle): void
+    + unpark(): void
+    + isAvailable(): boolean
 }
 
-record Ticket {
-    +registrationNumber: String
-    +slotNumber: int
-    +entryTime: LocalDateTime
-    +exitTime: LocalDateTime
-    +fee: Money
-    +toString(): String
+class Ticket <<record>> {
+    + registrationNumber: String
+    + slotNumber: int
+    + entryTime: LocalDateTime
+    + exitTime: LocalDateTime
+    + fee: Money
+    + toString(): String
 }
 
-class Money {
-    -amount: BigDecimal
-    +Money(amount: String)
-    +Money(amount: double)
-    +add(other: Money): Money
-    +toString(): String
+class Money <<immutable>> {
+    - amount: BigDecimal
+    + Money(amount: String)
+    + Money(amount: double)
+    + add(other: Money): Money
+    + doubleValue(): double
+    + toString(): String
 }
 
 class ParkingService {
-    -slots: ParkingSlot[]
-    -ticketHistory: List<Ticket>
-    -parkedRegistrationNumbers: Set<String>
-    +ParkingService(capacity: int)
-    +park(vehicle: Vehicle): int throws ParkingFullException, IllegalArgumentException
-    +unpark(slotNumber: int): Ticket throws IllegalArgumentException
-    +displayParkingStatus(): void
-    +findVehicles(predicate: Predicate<Vehicle>): List<ParkingSlot>
-    +park(registrationNumber: String, type: VehicleType): int throws ParkingFullException
-    +printSlotDetails(slotNumbers: int...): void
+    - slots: ParkingSlot[]
+    - ticketHistory: List<Ticket>
+    - parkedRegistrationNumbers: Set<String>
+    + ParkingService(capacity: int)
+    + park(vehicle: Vehicle): int
+    + park(registrationNumber: String, type: VehicleType): int
+    + unpark(slotNumber: int): Ticket
+    + displayParkingStatus(): void
+    + findVehicles(predicate: Predicate<Vehicle>): List<ParkingSlot>
+    + printSlotDetails(slotNumbers: int...): void
 }
 
 class Main {
-    -parkVehicle(scanner: Scanner, parkingService: ParkingService): void
-    -unparkVehicle(scanner: Scanner, parkingService: ParkingService): void
-    -findVehicles(scanner: Scanner, parkingService: ParkingService): void
-    -viewSpecificSlots(scanner: Scanner, parkingService: ParkingService): void
-    -getVehicleTypeFromInput(input: String): String
+    + {instance} main(): void
+    - parkVehicle(scanner: Scanner, parkingService: ParkingService): void
+    - unparkVehicle(scanner: Scanner, parkingService: ParkingService): void
+    - findVehicles(scanner: Scanner, parkingService: ParkingService): void
+    - viewSpecificSlots(scanner: Scanner, parkingService: ParkingService): void
+    - getVehicleTypeFromInput(input: String): String
 }
 
 enum VehicleType {
@@ -94,36 +100,87 @@ enum ParkingStatus {
     AVAILABLE
 }
 
-exception ParkingFullException {
-    +ParkingFullException(message: String)
+class ParkingFullException <<checked>> {
+    + ParkingFullException(message: String)
 }
 
 ' Define relationships
 
-Vehicle <|-- Car
-Vehicle <|-- Motorbike
+' Inheritance and interfaces
 Vehicle ..|> Parkable : implements
-Vehicle <|--o Car : permits
-Vehicle <|--o Motorbike : permits
+Vehicle <|-- Car : extends
+Vehicle <|-- Motorbike : extends
 
+' Compositions and associations
 ParkingSlot "1" *-- "0..1" Vehicle : contains
-ParkingSlot "1" *-- "1" ParkingStatus : has
+ParkingSlot --> ParkingStatus : uses
 
 ParkingService "1" *-- "1..*" ParkingSlot : manages
-ParkingService "1" *-- "0..*" Ticket : records
+ParkingService "1" o-- "0..*" Ticket : records
 ParkingService ..> ParkingFullException : throws
 ParkingService ..> IllegalArgumentException : throws
+
+Ticket --> Money : contains
 
 Main ..> ParkingService : uses
 Main ..> Car : creates
 Main ..> Motorbike : creates
-Main ..> Ticket : receives
 Main ..> VehicleType : uses
 
-Ticket "1" *-- "1" Money : has
+Car --> VehicleType : uses
+Motorbike --> VehicleType : uses
+Vehicle --> VehicleType : uses
 
-Ticket ..> VehicleType : relates to
-Car ..> VehicleType : uses
-Motorbike ..> VehicleType : uses
+note right of Vehicle
+  <b>Sealed Class (Java 17+)</b>
+  Only Car and Motorbike
+  can extend this class.
+
+  <b>this() vs this.</b>
+  - this() = constructor chaining
+  - this. = instance member access
+end note
+
+note right of Car
+  <b>Flexible Constructor Body</b>
+  <b>(JEP 513 - Java 25)</b>
+  Validates input BEFORE
+  calling super()
+
+  <b>super() vs super.</b>
+  - super() = parent constructor
+  - super. = parent member access
+end note
+
+note bottom of Main
+  <b>Instance Main Method</b>
+  <b>(JEP 512 - Java 25)</b>
+  void main() instead of
+  public static void main(String[] args)
+end note
+
+note right of ParkingService
+  <b>Key Features:</b>
+  - Method overloading (park)
+  - Varargs (printSlotDetails)
+  - Lambdas with Predicate
+  - Arrays for slots
+  - List/Set from Core API
+end note
+
+note bottom of Money
+  <b>Custom Immutable Type</b>
+  All fields are final,
+  no setters, returns new
+  instances from methods.
+end note
+
+note bottom of Ticket
+  <b>Java Record</b>
+  Immutable data carrier
+  with auto-generated
+  constructor, getters,
+  equals, hashCode.
+end note
 
 @enduml

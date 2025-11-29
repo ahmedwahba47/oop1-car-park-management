@@ -9,6 +9,15 @@ import com.carpark.service.ParkingService;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Main class demonstrating INSTANCE MAIN METHOD (JEP 512 - Java 25).
+ *
+ * Instead of the traditional: public static void main(String[] args)
+ * We can now use: void main()
+ *
+ * This simplifies the entry point and allows instance methods to be called directly.
+ * Requires --enable-preview flag to compile and run.
+ */
 void main() {
     ParkingService parkingService = new ParkingService(10);
     System.out.println("Welcome to the Car Park Management System!");
@@ -45,6 +54,7 @@ void main() {
 private void parkVehicle(Scanner scanner, ParkingService parkingService) {
     System.out.print("Enter vehicle type (CAR/MOTORBIKE or C/MC): ");
     String typeInput = scanner.nextLine();
+    // LVTI (Local Variable Type Inference) - 'var' infers the type from the right-hand side
     var type = getVehicleTypeFromInput(typeInput);
 
     if (type == null) {
@@ -75,6 +85,7 @@ private void unparkVehicle(Scanner scanner, ParkingService parkingService) {
     scanner.nextLine(); // consume newline
 
     try {
+        // LVTI - 'var' infers type as Ticket from unpark() return type
         var ticket = parkingService.unpark(slotNumber);
         System.out.println("Vehicle unparked. Fee: " + ticket.fee());
         System.out.println("Ticket details: " + ticket);
@@ -83,6 +94,14 @@ private void unparkVehicle(Scanner scanner, ParkingService parkingService) {
     }
 }
 
+/**
+ * Demonstrates LAMBDAS with PREDICATE, PATTERN MATCHING, and METHOD REFERENCES.
+ *
+ * PATTERN MATCHING (Java 21+): 'v instanceof Car car' both checks the type AND
+ * creates a variable 'car' of type Car in one expression.
+ *
+ * METHOD REFERENCE: 'System.out::println' is shorthand for 'x -> System.out.println(x)'
+ */
 private void findVehicles(Scanner scanner, ParkingService parkingService) {
     System.out.print("Enter vehicle type to find (CAR/MOTORBIKE or C/MC): ");
     String typeInput = scanner.nextLine();
@@ -95,8 +114,10 @@ private void findVehicles(Scanner scanner, ParkingService parkingService) {
 
     List<com.carpark.model.ParkingSlot> foundSlots;
     if ("CAR".equalsIgnoreCase(type)) {
+        // LAMBDA with PATTERN MATCHING: 'v instanceof Car car' checks type AND creates typed variable
         foundSlots = parkingService.findVehicles(v -> v instanceof Car car && car.getType() == com.carpark.model.VehicleType.CAR);
     } else if ("MOTORBIKE".equalsIgnoreCase(type)) {
+        // LAMBDA with PATTERN MATCHING for Motorbike
         foundSlots = parkingService.findVehicles(v -> v instanceof Motorbike motorbike && motorbike.getType() == com.carpark.model.VehicleType.MOTORBIKE);
     } else {
         System.out.println("Invalid vehicle type.");
@@ -107,6 +128,7 @@ private void findVehicles(Scanner scanner, ParkingService parkingService) {
         System.out.println("No vehicles of type " + type + " found.");
     } else {
         System.out.println("Found vehicles of type " + type + ":");
+        // METHOD REFERENCE: System.out::println is equivalent to slot -> System.out.println(slot)
         foundSlots.forEach(slot -> System.out.println("Slot " + slot.getSlotNumber() + ": " + slot.getVehicle().getRegistrationNumber()));
     }
 }
@@ -127,6 +149,15 @@ private void viewSpecificSlots(Scanner scanner, ParkingService parkingService) {
     parkingService.printSlotDetails(slotNumbers);
 }
 
+/**
+ * Demonstrates SWITCH EXPRESSION (Java 14+).
+ *
+ * SWITCH EXPRESSION vs SWITCH STATEMENT:
+ * - Switch EXPRESSION returns a value (assigned to variable or returned)
+ * - Uses arrow syntax (->) instead of colon (:)
+ * - No fall-through, no break needed
+ * - Must be exhaustive (all cases covered or have default)
+ */
 private String getVehicleTypeFromInput(String input) {
     return switch (input.toLowerCase()) {
         case "car", "c" -> "CAR";

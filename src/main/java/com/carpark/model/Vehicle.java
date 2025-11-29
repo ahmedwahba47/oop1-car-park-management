@@ -10,13 +10,21 @@ public sealed abstract class Vehicle implements Parkable permits Car, Motorbike 
     private final VehicleType type;
 
     /**
-     * Constructor for Vehicle.
+     * Constructor for Vehicle with both parameters.
      * 'this.registrationNumber' is used to distinguish the instance variable from the parameter.
-     * In contrast, 'this()' would be used to call another constructor in the same class.
      */
     public Vehicle(String registrationNumber, VehicleType type) {
         this.registrationNumber = registrationNumber;
         this.type = type;
+    }
+
+    /**
+     * Overloaded constructor demonstrating 'this()' constructor chaining.
+     * 'this()' calls another constructor in the SAME class.
+     * In contrast, 'this.' accesses instance members.
+     */
+    public Vehicle(String registrationNumber) {
+        this(registrationNumber, VehicleType.CAR); // this() calls the other constructor
     }
 
     @Override

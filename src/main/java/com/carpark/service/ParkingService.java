@@ -85,7 +85,13 @@ public class ParkingService {
     /**
      * Finds vehicles based on a predicate.
      * The predicate is a lambda expression, which is a closure.
-     * It can access variables from its enclosing scope (effectively final variables).
+     *
+     * FINAL vs EFFECTIVELY FINAL:
+     * - 'final' variables are explicitly declared with the final keyword
+     * - 'effectively final' variables are never reassigned after initialization
+     * - Lambdas can only capture local variables that are final or effectively final
+     * - In the example below, 'slot' and 'vehicle' are effectively final because
+     *   they are never reassigned within their scope, allowing them to be used in lambdas.
      */
     public List<ParkingSlot> findVehicles(Predicate<Vehicle> predicate) {
         List<ParkingSlot> foundSlots = new ArrayList<>();

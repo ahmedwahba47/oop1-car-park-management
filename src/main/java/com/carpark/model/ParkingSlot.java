@@ -2,6 +2,14 @@ package com.carpark.model;
 
 import java.time.LocalDateTime;
 
+/**
+ * Represents a parking slot in the car park.
+ *
+ * ENCAPSULATION is demonstrated here:
+ * - All fields are private (slotNumber, vehicle, status, entryTime)
+ * - Access is provided through public getter methods
+ * - State changes are controlled through park() and unpark() methods
+ */
 public class ParkingSlot {
     private final int slotNumber;
     private Vehicle vehicle;
