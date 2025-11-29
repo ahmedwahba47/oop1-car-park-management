@@ -1,13 +1,16 @@
-import com.carpark.model.Money;
 import com.carpark.exception.ParkingFullException;
 import com.carpark.model.Car;
 import com.carpark.model.Motorbike;
-import com.carpark.model.Ticket;
-import com.carpark.model.Vehicle;
 import com.carpark.service.ParkingService;
 
 import java.util.List;
 import java.util.Scanner;
+
+/**
+ * Constant for parking capacity.
+ * Java convention: constants are static final with UPPER_SNAKE_CASE naming.
+ */
+private static final int PARKING_CAPACITY = 10;
 
 /**
  * Main class demonstrating INSTANCE MAIN METHOD (JEP 512 - Java 25).
@@ -19,7 +22,7 @@ import java.util.Scanner;
  * Requires --enable-preview flag to compile and run.
  */
 void main() {
-    ParkingService parkingService = new ParkingService(10);
+    ParkingService parkingService = new ParkingService(PARKING_CAPACITY);
     System.out.println("Welcome to the Car Park Management System!");
 
     try (Scanner scanner = new Scanner(System.in)) {

@@ -50,3 +50,4 @@ buildNumber.properties
 /dist/
 /nbdist/
 .nb-gradle/
+node_modules

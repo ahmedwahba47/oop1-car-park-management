@@ -1,7 +1,5 @@
 package com.carpark.model;
 
-import com.carpark.model.Money;
-
 public final class Motorbike extends Vehicle {
         /**
      * Constructor for Motorbike.
